@@ -46,3 +46,16 @@
   margin-bottom: 20px;
   font-weight: bold;
 }
+table{
+  border: 1px solid black;
+}
+table thead{
+  border: 1px solid black;
+}
+table tbody{
+  padding: 50px;
+  border: 1px solid black;
+}
+table td{
+  padding: 30px;
+}

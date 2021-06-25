@@ -7,49 +7,45 @@ import {
   Link,
 } from "react-router-dom";
 import styles from "./App.module.css";
-import ExpensesPage from "./components/ExpensesPage";
-import ExpenseEdit from "./components/ExpenseEdit";
-import Notifications from "./components/Notifications";
+import Navbar from './components/Navbar';
+import ExpenseEdit from './components/ExpenseEdit';
+import Login from './components/Login';
+import Signup from './components/Signup';
+import Accounts from './components/Accounts';
+import AccountList from "./components/AccountList";
+import EditAccount from './components/EditAccount';
+import ErrorMessage from './components/ErrorMessage';
+import Expenses from './components/Expenses';
+import ExpenseList from './components/ExpenseList';
+import { transitions, positions, Provider as AlertProvider } from 'react-alert'
+import AlertTemplate from 'react-alert-template-basic'
 
 function App() {
+  const options = {
+    // you can also just use 'bottom center'
+    position: positions.BOTTOM_CENTER,
+    timeout: 5000,
+    offset: '30px',
+    // you can also just use 'scale'
+    transition: transitions.SCALE
+  }
   return (
-    <Router>
-      <Notifications>
-        <div className={styles.app}>
-          <nav className={styles.mainNav}>
-            <div className={styles.navInner}>
-              <h1 className={styles.title}>Expense Tracker</h1>
+    <div>
+      <AlertProvider template={AlertTemplate} {...options}>
+      <Navbar/>
+      <Switch>
+        <Route exact path="/" component={AccountList}/>
+        <Route exact path="/login" component={Login}/>
+        <Route exact path="/signup" component={Signup}/>
+        <Route exact path="/accounts/new" component={Accounts}/>
+        <Route exact path="/accounts/:id" component={EditAccount}/>
+        <Route exact path="/expenses/:id" component={ExpenseList}/>
+        <Route exact path="/account/expenses/:id" component={Expenses}/>
+        <Route exact path="/404" componet={ErrorMessage}/>
+      </Switch>
+      </AlertProvider>
+    </div>
 
-              <ul>
-                <li>
-                  <Link to={"/"}>Expenses</Link>
-                </li>
-                <li>
-                  <Link to={"/accounts"}>Accounts</Link>
-                </li>
-              </ul>
-            </div>
-          </nav>
-
-          <main className={styles.main}>
-            <Switch>
-              <Route exact path={"/"}>
-                <Redirect to={"/expenses"} />
-              </Route>
-              <Route exact path={"/expenses"}>
-                <ExpensesPage />
-              </Route>
-              <Route exact path={"/expense/new"}>
-                <ExpenseEdit />
-              </Route>
-              <Route exact path={"/expense/:id"}>
-                <ExpenseEdit />
-              </Route>
-            </Switch>
-          </main>
-        </div>
-      </Notifications>
-    </Router>
   );
 }
 
